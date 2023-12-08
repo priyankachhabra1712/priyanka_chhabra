@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Contact Management {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 style="text-align: center; color: blue;" class="m-6">Create a Contact</h1>
+
+    <form method="POST">
+      {% csrf_token %}
+        <div class="mb-2">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="contact_name" required>
+        </div>
+        <div class="mb-2">
+          <label for="email_cont" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email_cont" name="contact_email" aria-describedby="emailHelp" required>
+          <div id="emailHelp" class="form-text"></div>
+        </div>
+        <div class="mb-2">
+            <label for="contact_notes" class="form-label">Notes</label>
+            <textarea class="form-control" id="contact_notes" rows="3" required></textarea>
+        </div>
+        <input type="text" name="created_time" id="created_time" value="{{ created_time }}" hidden>
+        <button type="submit"  class="btn btn-primary" style="color: white;">Create Contact</button>
+        <a href="{% url 'landing_page' %}" class="btn btn-outline-secondary"  >Cancel</a>
+      </form>
+</div>
+
+{% endblock %}
