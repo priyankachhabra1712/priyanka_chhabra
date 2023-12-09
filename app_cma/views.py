@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from .models import Contacts
 from django.contrib import messages
 import datetime
-
+from .form import formCon
 def landing_page(request):
     all_contacts = Contacts.objects.all()
     return render(request, 'landing_page.html', {'all_contacts': all_contacts})
@@ -18,15 +18,25 @@ def landing_page(request):
 
 def contact_add(request):
     if request.method == 'POST':
-        form = ContactForm(request.POST or None)
+
+        form = formCon(request.POST or None)
+
         if form.is_valid():
             print(form["contact_email"].value())
             if Contacts.objects.filter(contact_email=form['contact_email'].value()):
                 messages.success(request, ('Contact with this E-mail id already exists! Please try again.'))
                 return redirect('contact_add')
+            elif Contacts.objects.filter(contact_name=form['contact_name'].value()):
+                messages.success(request, ('Contact with this name already exists! Please try again.'))
+                return redirect('contact_add')
             else:
                 form.save()
                 messages.success(request, ('Contact created successfully.'))
                 return redirect('landing_page')
+        else:
+            # prints error for debugging
+            print(form.errors)
     else:
-        return render(request, 'contact_add.html', {'created_time': create_time()})
+        form = formCon()
+
+    return render(request, 'contact_add.html', {'form': form,'created_time': create_time()})

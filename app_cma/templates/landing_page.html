@@ -1,12 +1,24 @@
 {% extends 'base.html' %}
 
+
 {% block title %} Contact Management {% endblock %}
 
 {% block content %}
 <h1 style="text-align: center; color: blue">Contact Management</h1>
+
 <div style="display: flex; justify-content: left;">
     <a href="{% url 'contact_add' %}" type="button" style="color: white; text-decoration: none;" class="btn btn-primary">Create a New Contact</a>
 </div>
+
+{% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 20px;">
+    <strong>{{ message }}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+{% endif %}
+
 <div style="display: flex; justify-content: center;">
     <table class="table m-3" style="text-align: center;">
         <thead>
