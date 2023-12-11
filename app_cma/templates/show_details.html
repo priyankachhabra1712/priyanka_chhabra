@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} Contact Management {% endblock %}
+{% block title %} Contact Management | Details {% endblock %}
 
 {% block content %}
 
@@ -14,9 +14,10 @@
     </div>
 </div>
 <div >
-    <button onclick="window.location.href = '/'" class="btn btn-primary"  data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Home</button>
-    <button onclick="window.location.href = '/'" class="btn btn-warning"  data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Edit</button>
-    <button onclick="window.location.href = '/'" class="btn btn-danger"  data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Delete</button>
+    <button onclick="window.location.href = '/'" class="btn btn-primary" >Home</button>
+    <a class="btn btn-warning" href="{% url 'delete_contact' curr_contact.id %}">Edit</a>
+    <a class="btn btn-danger" href="{% url 'delete_contact' curr_contact.id %}">Delete</a>
+
 </div>
 
 {% endblock %}

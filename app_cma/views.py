@@ -12,6 +12,16 @@ def create_time():
     time = datetime.datetime.now().strftime('%b %d, %Y, %H:%M')
     return time
 
+
+def delete_contact(request, contact_id):
+    curr_contact = Contacts.objects.get(pk=contact_id)
+    return render(request, 'delete_contact.html', {'curr_contact': curr_contact})
+
+def delete(request, contact_id):
+    curr_contact = Contacts.objects.get(pk=contact_id)
+    curr_contact.delete()
+    return redirect('landing_page')
+
 def contact_add(request):
     if request.method == 'POST':
 
