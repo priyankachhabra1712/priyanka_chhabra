@@ -28,7 +28,18 @@
             <th scope="col">Created Time</th>
           </tr>
         </thead>
-
+                <tbody>
+          {% if all_contacts %}
+            {% for contact in all_contacts %}
+              <tr>
+                <td><a href="{% url 'show_details' contact.id %}" style="text-decoration: none;">{{contact.contact_name}}</a></td>
+                <td>{{contact.contact_email}}</td>
+                <td>{{contact.created_time}}</td>
+              </tr>
+            {% endfor %}
+          {% endif %}
+        </tbody>
+      </table>
       </table>
 </div>
 {% endblock %}

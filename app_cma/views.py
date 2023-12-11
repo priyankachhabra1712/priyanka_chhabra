@@ -12,10 +12,6 @@ def create_time():
     time = datetime.datetime.now().strftime('%b %d, %Y, %H:%M')
     return time
 
-def landing_page(request):
-    all_contacts = Contacts.objects.all()
-    return render(request, 'landing_page.html', {'all_contacts': all_contacts})
-
 def contact_add(request):
     if request.method == 'POST':
 
@@ -40,3 +36,8 @@ def contact_add(request):
         form = formCon()
 
     return render(request, 'contact_add.html', {'form': form,'created_time': create_time()})
+
+def show_details(request, contact_id):
+    curr_contact = Contacts.objects.get(pk=contact_id)
+    print(curr_contact)
+    return render(request, 'show_details.html', {'curr_contact': curr_contact})

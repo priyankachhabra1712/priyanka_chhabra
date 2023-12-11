@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} Contact Management {% endblock %}
+
+{% block content %}
+
+<h1 style="text-align: center; color: blue;" class="m-5">{% block header %}Contact Details{% endblock %}</h1>
+<div style="display: flex; justify-content: left;">
+    <div style="display: grid; grid-template-columns: 150px auto;">
+        <h5>Name: </h5><h5 style="margin-left: 5%">{{ curr_contact.contact_name }}</h5>
+        <h5>E-mail: </h5> <h5 style="margin-left: 5%">{{ curr_contact.contact_email }}</h5>
+        <h5>Notes: </h5> <h5 style="margin-left: 5%">{{ curr_contact.contact_notes }}</h5>
+        <h5>Created Time: </h5> <h5 style="margin-left: 5%">{{ curr_contact.created_time }}</h5>
+    </div>
+</div>
+<div >
+    <button onclick="window.location.href = '/'" class="btn btn-primary"  data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Home</button>
+</div>
+
+{% endblock %}
