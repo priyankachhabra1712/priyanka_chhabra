@@ -32,7 +32,7 @@
           {% if all_contacts %}
             {% for contact in all_contacts %}
               <tr>
-                <td><a href="{% url 'show_details' contact.id %}" style="text-decoration: none;">{{contact.contact_name}}</a></td>
+                <td> <a href="{% url 'update' contact.id %}"><i class="fa-solid fa-pencil btn"></i></a> <a href="{% url 'delete_contact' contact.id %}"><i class="fa-solid fa-trash btn"></i></a> <a href="{% url 'show_details' contact.id %}" style="text-decoration: none;">{{contact.contact_name}}</a></td>
                 <td>{{contact.contact_email}}</td>
                 <td>{{contact.created_time}}</td>
               </tr>
