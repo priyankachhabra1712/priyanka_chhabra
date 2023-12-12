@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %} Contact Management | Update Contact {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 style="text-align: center; color: blue;" class="m-5">Update Contact</h1>
+    {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+    {% endif %}
+    <div class="mb-3">
+       <form method="POST">
+            {% csrf_token %}
+           <label for="contact_name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="contact_name" name="contact_name" value="{{curr_contact.contact_name}}" required>
+        </div>
+        <div class="mb-3">
+          <label for="contact_email" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="contact_email" name="contact_email" aria-describedby="emailHelp" value="{{curr_contact.contact_email}}" required>
+          <div id="emailHelp" class="form-text"></div>
+        </div>
+        <div class="mb-3">
+            <label for="contact_notes" class="form-label">Notes</label>
+            <input type="text" class="form-control" name="contact_notes" id="contact_notes" value="{{curr_contact.contact_notes}}" required>
+        </div>
+     <div style=" margin-top: 10px">
+        <button type="submit"  class="btn btn-primary" style="color: white;">Submit</button>
+        <a href="{% url 'landing_page' %}" class="btn btn-outline-secondary"  >Cancel</a>
+         </div>
+      </form>
+    </div>
+</div>
+
+
+{% endblock %}

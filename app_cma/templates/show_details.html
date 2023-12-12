@@ -15,7 +15,7 @@
 </div>
 <div >
     <button onclick="window.location.href = '/'" class="btn btn-primary" >Home</button>
-    <a class="btn btn-warning" href="{% url 'delete_contact' curr_contact.id %}">Edit</a>
+    <a class="btn btn-warning" href="{% url 'update' curr_contact.id %}">Edit</a>
     <a class="btn btn-danger" href="{% url 'delete_contact' curr_contact.id %}">Delete</a>
 
 </div>

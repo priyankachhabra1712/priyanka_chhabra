@@ -28,20 +28,21 @@ def contact_add(request):
         form = formCon(request.POST or None)
 
         if form.is_valid():
-            print(form["contact_email"].value())
+
             if Contacts.objects.filter(contact_email=form['contact_email'].value()):
-                messages.success(request, ('Contact with this E-mail id already exists! Please try again.'))
+                messages.error(request, ('Contact with this E-mail id already exists! Please try again.'))
                 return redirect('contact_add')
-            elif Contacts.objects.filter(contact_name=form['contact_name'].value()):
-                messages.success(request, ('Contact with this name already exists! Please try again.'))
-                return redirect('contact_add')
+            # elif Contacts.objects.filter(contact_name=form['contact_name'].value()):
+            #     messages.success(request, ('Contact with this name already exists! Please try again.'))
+            #     return redirect('contact_add')
             else:
                 form.save()
                 messages.success(request, ('Contact created successfully.'))
                 return redirect('landing_page')
         else:
-            # prints error for debugging
-            print(form.errors)
+            messages.error(request, ('Enter a valid email address'))
+            render(request, 'contact_add.html', {'form': form, 'created_time': create_time()})
+
     else:
         form = formCon()
 
@@ -51,3 +52,41 @@ def show_details(request, contact_id):
     curr_contact = Contacts.objects.get(pk=contact_id)
     print(curr_contact)
     return render(request, 'show_details.html', {'curr_contact': curr_contact})
+
+def update(request, contact_id):
+
+    if request.method == 'POST':
+        curr_contact = Contacts.objects.get(pk=contact_id)
+        form = formCon(request.POST or None, instance=curr_contact)
+        curr_email = curr_contact.contact_email
+        if form.is_valid():
+            if Contacts.objects.filter(contact_email=form['contact_email'].value(), contact_name=form['contact_name'].value(), contact_notes=form['contact_notes'].value()):
+                messages.warning(request, ('Contact already exists! No changes were made.'))
+                return redirect('landing_page')
+
+            # this is needed in case no email update, otherwise it will always complain that email id exists and update won't happen
+
+            elif curr_email == form['contact_email'].value():
+                form.save()
+                messages.success(request, ('Contact update successful'))
+                return redirect('landing_page')
+
+            # this is needed in case email updated but that is already present for other contact
+
+            elif Contacts.objects.filter(contact_email=form['contact_email'].value()):
+                messages.error(request, ('Contact with this E-mail id already exists! Please try again.'))
+                return render(request, 'update.html', {'curr_contact': curr_contact, 'created_time': curr_contact.created_time})
+
+            else:
+                form.save()
+                messages.success(request, ('Contact update successful'))
+                return redirect('landing_page')
+        else:
+            form = formCon()
+            messages.error(request, ('Enter a valid email address'))
+            return render(request, 'update.html',
+                          {'curr_contact': curr_contact, 'created_time': curr_contact.created_time})
+
+    else:
+        curr_contact = Contacts.objects.get(pk=contact_id)
+        return render(request, 'update.html', {'curr_contact': curr_contact, 'created_time': create_time()})
